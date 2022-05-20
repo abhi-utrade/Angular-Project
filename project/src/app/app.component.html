@@ -1,0 +1,15 @@
+<div class="bodyDiv">
+<mat-toolbar color="primary">
+  <img src="../assets/stocks.png"class="logo">
+  <span>Stocks Screener</span>
+
+  <app-search (msgEvent)="receiveMsg($event)"></app-search>
+
+</mat-toolbar>
+
+<app-card [apiData]="message" (onBtnClicked)="toggleStepper = !toggleStepper"></app-card>
+<app-price-depth *ngIf="toggleStepper"></app-price-depth>
+</div>
+
+
+

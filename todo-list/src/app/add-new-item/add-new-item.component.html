@@ -1,0 +1,11 @@
+<h2 class="addHeading">Add new items in the List</h2>
+
+<div class="container">
+<form (ngSubmit)="addItem()">
+    <div class="form-group container">
+      <label for="title">Todo Title</label>
+      <input type="text" [(ngModel)]="title" name="title" id="title" class="form-control" aria-describedby="emailHelp">
+      </div>
+    <button type="submit" class="btn btn-primary addBtn">Add Todo</button>
+  </form>
+  </div>

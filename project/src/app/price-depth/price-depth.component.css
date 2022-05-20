@@ -1,0 +1,38 @@
+table {
+    width: 30%;
+}
+.priceDepth{
+  margin-left: 50px;
+  margin-top: 10px;
+}
+
+.mat-column-buyQty{
+  color: green;
+  width: 15%;
+  text-align: center;
+}
+.mat-column-buyOrder{
+  color: green;
+  width: 15%;
+  text-align: center;
+}
+.mat-column-bid{
+  color: green;
+  width: 15%;
+  text-align: center;
+}
+.mat-column-ask{
+  color: red;
+  width: 15%;
+  text-align: center;
+}
+.mat-column-sellOrder{
+  color: red;
+  width: 15%;
+  text-align: center;
+}
+.mat-column-sellQty{
+  color: red;
+  width: 15%;
+  text-align: center;
+}

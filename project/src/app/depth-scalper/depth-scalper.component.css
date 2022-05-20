@@ -1,0 +1,53 @@
+.popupBox {
+    width: 400px;
+    height: 400px;
+}
+
+.popupHeading {
+    color: white;
+    font-size: 15px;
+    background-color: black;
+    margin-top: -22px;
+    margin-left: -20px;
+    padding-left: 22px;
+    position: fixed;
+}
+
+.mat-button {
+    margin-left: 240px;
+    font-size: 20px;
+}
+
+table {
+    width: 100%;
+    overflow: hidden;
+    margin-top: 20px;
+}
+
+.scalperTable {
+    overflow: hidden;
+}
+
+.mat-column-ask {
+    border: 1px solid #e0e0e0;
+    text-align: center;
+    width: 25%;
+}
+
+.mat-column-price {
+    border: 1px solid #e0e0e0;
+    text-align: center;
+    width: 25%;
+}
+
+.mat-column-bid {
+    border: 1px solid #e0e0e0;
+    text-align: center;
+    width: 25%;
+}
+
+.mat-column-myVol {
+    border: 1px solid #e0e0e0;
+    text-align: center;
+    width: 25%;
+}

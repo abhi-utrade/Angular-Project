@@ -1,0 +1,17 @@
+<div class="search-div">
+
+    <mat-form-field appearance="fill">
+        <input matInput #box type="text" 
+                (keyup.enter)="getSymbol(box.value)" 
+                placeholder="Enter Symbol">
+
+        <button (click)="getSymbol(box.value)" 
+                type="submit"  
+                mat-button class="search-btn" 
+                color="primary">
+
+            <mat-icon aria-hidden="false" aria-label="Example home icon">search</mat-icon>
+        </button>
+    </mat-form-field>
+</div>
+

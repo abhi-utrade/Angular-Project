@@ -1,0 +1,27 @@
+.search-div {
+  margin-top: 15px;
+  font-size: 20px;
+  margin-left: 250px;
+}
+.mat-form-field {
+    width: 400px;
+    padding: 20px;
+    color: black;
+  }
+
+input {
+  background-color: #f5eaea;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 15px;
+  padding-left: 20px;
+}
+.mat-button{
+  margin-left: -55px;
+  margin-bottom: 2px;
+
+}
+
+.demo {
+  color: blue;
+}

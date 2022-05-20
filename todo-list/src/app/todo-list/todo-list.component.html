@@ -1,0 +1,21 @@
+<div class="row">
+<div class="col">
+<div class="card">
+<div *ngIf="this.todos.length===0; else elseBlock">No Todos Found</div>
+<ng-template #elseBlock>
+<ul class="list-group" *ngFor="let todo of todos" >
+    <div class="card-body">
+    <li class="list-group-item">{{todo.name}} 
+        <a href="#" (click)="onDel(todo)"><img class="delImg" src="../assets/del.png"></a>
+    </li>
+</div>
+</ul>
+</ng-template>
+    
+</div>
+
+</div>
+<div class="col col-lg-5">
+    <app-add-new-item (todoAdd)="onAdd($event)"></app-add-new-item>
+    </div>
+</div>
