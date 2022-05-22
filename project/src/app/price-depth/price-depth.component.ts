@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { SymbolService } from '..//symbol.service';
+import { Observable, of } from "rxjs"
 
 //Initialised Table colums using interface
 export interface PDElement {
@@ -27,6 +28,9 @@ export class PriceDepthComponent implements OnInit {
   lastPrice:any;
   buyQtyArr:number[] = [];
   sellQtyArr:number[] = [];
+  priceDepthQty:any;
+  interval:any;
+  bidObservable$: any;
   
   //Display Column of Table
   displayedColumns: string[] = ['buyQty', 'buyOrder', 'bid', 'ask', 'sellOrder', 'sellQty'];
@@ -34,12 +38,13 @@ export class PriceDepthComponent implements OnInit {
   constructor(private sharedData:SymbolService) {
     //Get API data from service component
     //this. apiData = this.sharedData.sendData();
-    this.lastPrice = this.sharedData.sendData();
-    this.randomQtyGenerator();
+    
+    //this.lastPrice = this.sharedData.sendData();
     this.showData();
+    
    }
-
-   //GenerateRandom number for bid & ask
+  /* 
+    //GenerateRandom number for bid & ask
   randomNumberGenerator(min:number, max:number) { 
     let num = Math.random() *(max - min) + min;
      num = num * 100;
@@ -73,6 +78,7 @@ export class PriceDepthComponent implements OnInit {
 
 //Present data to table
   showData(){
+    this.randomQtyGenerator();
     //For Bid Array
     for(let i = 0; i < 5; i++ ){
       this.randomBid.push(this.randomNumberGenerator(this.lastPrice - 3.5, this.lastPrice));
@@ -97,14 +103,37 @@ export class PriceDepthComponent implements OnInit {
       });
     }
 
-    this.sharedData.getQty(this.buyQtyArr, this.sellQtyArr, this.randomBid, this.randomAsk);
-    //console.log(this.randomBid);
-    //Clear Array
+  }
+*/
+
+  
+   fetchData(){
+    this.priceDepthQty = this.sharedData.sendQty();
+    this.buyQtyArr = this.priceDepthQty[0];
+    this.sellQtyArr = this.priceDepthQty[1];
+    this.randomBid = this.priceDepthQty[2];
+    this.randomAsk = this.priceDepthQty[3];
+   }
+
+
+//Present data to table
+  showData(){
+    this.fetchData();
+    for(let i = 0; i < 5; i++){
+      this.ELEMENT_DATA.push({
+        buyQty: this.buyQtyArr[i], 
+        buyOrder: 0, 
+        bid: this.randomBid[i], 
+        ask: this.randomAsk[i], 
+        sellOrder: 0, 
+        sellQty: this.sellQtyArr[i]
+      });
+    }
   }
 
 
-  ngOnInit(): void {
-    
-  }
+  
+
+  ngOnInit(): void {}
 
 }

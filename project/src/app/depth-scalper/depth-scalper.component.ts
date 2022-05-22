@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SymbolService } from '..//symbol.service';
 
 export interface ScalperElement {
-  myVol: number;
+  myVol: any;
   bid: number;
   price: number;
   ask: number;
@@ -19,35 +19,58 @@ export class DepthScalperComponent implements OnInit {
   displayedColumns: string[] = ['myVol','bid','price', 'ask'];
   ltpDepth:any[] = [];
   lastPrice:any = 100;
+  priceDepthQty:any;
+  bid: number[]=[];
+  ask: number[]=[];
+  buyQty:number[] = [];
+  sellQty:number[] = [];
+  bidData:any;
+  askData:any;
 
   constructor(private sharedData:SymbolService) {
     this.lastPrice = (Math.ceil((this.sharedData.sendData())*20)/20);
+    this.priceDepthQty = this.sharedData.sendQty();
     this.depthGenerator(this.lastPrice);
+    this.buyQty = this.priceDepthQty[0];
+    this.sellQty = this.priceDepthQty[1];
+    this.bid = this.priceDepthQty[2];
+    this.ask = this.priceDepthQty[3];
     this.showData();
    }
 
   depthGenerator(num:number){
     let num1 = num;
-    for(let i = 0; i < 10; i++){
+    for(let i = 0; i < 20; i++){
         num +=  0.05;
         this.ltpDepth.push((Math.round(num * 100)/100));
     }
     this.ltpDepth.reverse();
     this.ltpDepth.push(num1)
-    for(let i = 0; i < 10; i++){
+    for(let i = 0; i < 20; i++){
       num1 -=  0.05;
       this.ltpDepth.push((Math.round(num1 * 100)/100));
-  }
+    }
   }
 
   showData(){
-    for(let i = 0; i < 20; i++){
+
+    for(let i = 0; i < 40; i++){
+      if(this.bid.includes(this.ltpDepth[i])){
+        let bidIdx = this.bid.findIndex(b=> b === this.ltpDepth[i])
+        this.bidData = this.buyQty[bidIdx];
+      }
+      if(this.ask.includes(this.ltpDepth[i])){
+        let askIdx = this.ask.findIndex(b=> b === this.ltpDepth[i])
+        this.askData = this.sellQty[askIdx];
+      }
       this.ELEMENT_DATA.push({
-        myVol: 0,
-        bid: 0,
+        myVol: "",
+        bid: this.bidData,
         price: this.ltpDepth[i],  
-        ask: 0
+        ask: this.askData
       });
+      this.bidData = "";
+      this.askData = "";
     }
     
   }

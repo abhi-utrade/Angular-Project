@@ -8,7 +8,6 @@ import { SymbolService } from '../symbol.service'
 export class SearchComponent implements OnInit {
   //To store data from api
   apiData:any;
-
   //Get Symbol name from Search
   symbolName!:string;
   getSymbol(val:string){
@@ -43,7 +42,9 @@ export class SearchComponent implements OnInit {
   }
 
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    
+  }
   
 
 }

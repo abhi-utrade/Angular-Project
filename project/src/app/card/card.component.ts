@@ -10,6 +10,7 @@ import { DepthScalperComponent } from '../depth-scalper/depth-scalper.component'
 })
 
 export class CardComponent implements OnInit {
+  interval:any;
   //Getting API data from parent component
   @Input() apiData: any;
   //Passing button status to Price Depth Component
