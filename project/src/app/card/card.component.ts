@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DepthScalperComponent } from '../depth-scalper/depth-scalper.component';
+import { SymbolService } from '..//symbol.service';
 
 
 @Component({
@@ -20,7 +21,7 @@ export class CardComponent implements OnInit {
     this.onBtnClicked.emit(true);
   }
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog, private sharedData:SymbolService) { }
 
   ngOnInit(): void {
     //Stored Static Data for card Elements
@@ -39,7 +40,6 @@ export class CardComponent implements OnInit {
         }
       ]
     };
-
   }
   //Function to open Dialog Box to show depth scalper
   openDialog() {
@@ -60,6 +60,11 @@ export class CardComponent implements OnInit {
     else if (this.apiData.data[0].day_change > 0){
       dChange!.style.color = "green";
     }
+    /*this.sharedData.passData();
+    setInterval(() => {
+      this.sharedData.passData();
+  }, 5000);*/
   }
+  
 
 }

@@ -19,6 +19,7 @@ export class DepthScalperComponent implements OnInit {
   displayedColumns: string[] = ['myVol','bid','price', 'ask'];
   ltpDepth:any[] = [];
   lastPrice:any = 100;
+  apiData:any;
   priceDepthQty:any;
   bid: number[]=[];
   ask: number[]=[];
@@ -29,13 +30,17 @@ export class DepthScalperComponent implements OnInit {
 
   constructor(private sharedData:SymbolService) {
     this.lastPrice = (Math.ceil((this.sharedData.sendData())*20)/20);
-    this.priceDepthQty = this.sharedData.sendQty();
     this.depthGenerator(this.lastPrice);
+
+   }
+
+   fetchData(){
+    this.priceDepthQty = this.sharedData.sendQty();
     this.buyQty = this.priceDepthQty[0];
     this.sellQty = this.priceDepthQty[1];
     this.bid = this.priceDepthQty[2];
     this.ask = this.priceDepthQty[3];
-    this.showData();
+    console.log(this.buyQty);
    }
 
   depthGenerator(num:number){
@@ -53,7 +58,8 @@ export class DepthScalperComponent implements OnInit {
   }
 
   showData(){
-
+    this.fetchData();
+    this.ELEMENT_DATA = [];
     for(let i = 0; i < 40; i++){
       if(this.bid.includes(this.ltpDepth[i])){
         let bidIdx = this.bid.findIndex(b=> b === this.ltpDepth[i])
@@ -89,7 +95,11 @@ export class DepthScalperComponent implements OnInit {
     this.tableCeter();
   }
   ngOnInit(): void {
-    
+    this.showData();
+    setInterval(() => {
+      this.tableCeter();
+      this.showData();
+  }, 5000);
     
   }
 

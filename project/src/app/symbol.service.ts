@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 
 @Injectable({
@@ -14,10 +14,12 @@ export class SymbolService{
   lastPrice:any;
   buyQtyArr:number[] = [];
   sellQtyArr:number[] = [];
-  interval:any;
+
+  
 
   constructor(private http:HttpClient) { }
 
+  /*
    //GenerateRandom number for bid & ask
    randomNumberGenerator(min:number, max:number) { 
     let num = Math.random() *(max - min) + min;
@@ -48,7 +50,7 @@ export class SymbolService{
     return Math.floor(Math.random() * (max - min + 1) + min)
   }
 
-  genrateData(){
+  generateData(){
     //For Bid Array
     for(let i = 0; i < 5; i++ ){
       this.randomBid.push(this.randomNumberGenerator(this.lastPrice - 5.5, this.lastPrice));
@@ -64,18 +66,22 @@ export class SymbolService{
     this.randomAsk.sort();
     
   }
-
+*/
 
   getData(data:any){
     this.apiData = data;
     this.lastPrice = this.apiData.data[0].price;
-    this.genrateData();
-    this.randomQtyGenerator();
-    
   }
   sendData(){
     return this.lastPrice;
     
+    
+  }
+  getQty(buyQtyArr:any, sellQtyArr:any, randomBid:any, randomAsk:any){
+    this.buyQtyArr = buyQtyArr;
+    this.sellQtyArr = sellQtyArr; 
+    this.randomBid = randomBid; 
+    this.randomAsk = randomAsk;
   }
 
   sendQty(){
@@ -84,7 +90,7 @@ export class SymbolService{
 
   //Calling API and passing it
   getSymbolData(symbolName:string){
-    let url = `https://api.stockdata.org/v1/data/quote?symbols=${symbolName}&api_token=1PsjC8oPAuL8xresz20vW9KX3LY5tN5a5qRutXhJ`;
+    let url = `https://api.stockdata.org/v1/data/quote?symbols=${symbolName}&api_token=DGPC7m9oYaDji0OvuIvkeDW21LHWYWQE42qoA20R`;
     return this.http.get(url);
   }
 

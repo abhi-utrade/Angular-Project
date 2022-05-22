@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { SymbolService } from '..//symbol.service';
-import { Observable, of } from "rxjs"
 
 //Initialised Table colums using interface
 export interface PDElement {
@@ -39,11 +38,12 @@ export class PriceDepthComponent implements OnInit {
     //Get API data from service component
     //this. apiData = this.sharedData.sendData();
     
-    //this.lastPrice = this.sharedData.sendData();
+    this.lastPrice = this.sharedData.sendData();
     this.showData();
     
+    
    }
-  /* 
+  
     //GenerateRandom number for bid & ask
   randomNumberGenerator(min:number, max:number) { 
     let num = Math.random() *(max - min) + min;
@@ -78,6 +78,8 @@ export class PriceDepthComponent implements OnInit {
 
 //Present data to table
   showData(){
+    this.ELEMENT_DATA = [];
+    this.clearArr();
     this.randomQtyGenerator();
     //For Bid Array
     for(let i = 0; i < 5; i++ ){
@@ -103,8 +105,10 @@ export class PriceDepthComponent implements OnInit {
       });
     }
 
+    this.sharedData.getQty(this.buyQtyArr, this.sellQtyArr, this.randomBid, this.randomAsk);
+
   }
-*/
+/*
 
   
    fetchData(){
@@ -119,6 +123,8 @@ export class PriceDepthComponent implements OnInit {
 //Present data to table
   showData(){
     this.fetchData();
+    console.log(this.randomBid);
+    this.ELEMENT_DATA = [];
     for(let i = 0; i < 5; i++){
       this.ELEMENT_DATA.push({
         buyQty: this.buyQtyArr[i], 
@@ -129,11 +135,21 @@ export class PriceDepthComponent implements OnInit {
         sellQty: this.sellQtyArr[i]
       });
     }
+    
   }
 
+*/
+clearArr(){
+  this.randomBid = [];
+  this.randomAsk = [];
+  this.buyQtyArr = [];
+  this.sellQtyArr = [];
+}
 
-  
-
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    setInterval(() => {
+      this.showData();
+  }, 5000);
+  }
 
 }
