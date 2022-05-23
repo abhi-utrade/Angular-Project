@@ -35,96 +35,33 @@ export class PriceDepthComponent implements OnInit {
   displayedColumns: string[] = ['buyQty', 'buyOrder', 'bid', 'ask', 'sellOrder', 'sellQty'];
 
   constructor(private sharedData:SymbolService) {
-    //Get API data from service component
-    //this. apiData = this.sharedData.sendData();
     
     this.lastPrice = this.sharedData.sendData();
     this.showData();
     
     
    }
-  
-    //GenerateRandom number for bid & ask
-  randomNumberGenerator(min:number, max:number) { 
-    let num = Math.random() *(max - min) + min;
-     num = num * 100;
-    let x = num%10;
-    num = num - x;
-    if(x >= 5){
-        x = 5;
-    }
-    else{
-        x = 0;
-    }
-    num = num + x;
-    num = num/100;
-
-    return (+num.toFixed(2));
-  }
-
-  randomQtyGenerator(){
-    for(let i = 0; i < 5; i++){
-      this.buyQtyArr.push(this.quantityGenerator(1,1000));
-      this.sellQtyArr.push(this.quantityGenerator(1,1000));
-    }
-
-  }
-
-  //Generate quantity
-  quantityGenerator(min:number, max:number) { 
-    return Math.floor(Math.random() * (max - min + 1) + min)
-  }
-
-
-//Present data to table
-  showData(){
-    this.ELEMENT_DATA = [];
-    this.clearArr();
-    this.randomQtyGenerator();
-    //For Bid Array
-    for(let i = 0; i < 5; i++ ){
-      this.randomBid.push(this.randomNumberGenerator(this.lastPrice - 3.5, this.lastPrice));
-    }
-    this.randomBid.sort();
-    this.randomBid.reverse();
-
-    //For Ask array
-    for(let i = 0; i < 5; i++ ){
-      this.randomAsk.push(this.randomNumberGenerator(this.lastPrice, this.lastPrice + 3.5));
-    }
-    this.randomAsk.sort();
-    
-    for(let i = 0; i < 5; i++){
-      this.ELEMENT_DATA.push({
-        buyQty: this.buyQtyArr[i], 
-        buyOrder: 0, 
-        bid: this.randomBid[i], 
-        ask: this.randomAsk[i], 
-        sellOrder: 0, 
-        sellQty: this.sellQtyArr[i]
-      });
-    }
-
-    this.sharedData.getQty(this.buyQtyArr, this.sellQtyArr, this.randomBid, this.randomAsk);
-
-  }
-/*
 
   
    fetchData(){
     this.priceDepthQty = this.sharedData.sendQty();
-    this.buyQtyArr = this.priceDepthQty[0];
-    this.sellQtyArr = this.priceDepthQty[1];
-    this.randomBid = this.priceDepthQty[2];
-    this.randomAsk = this.priceDepthQty[3];
+    if(this.lastPrice == this.priceDepthQty[4]){
+      this.buyQtyArr = this.priceDepthQty[0];
+      this.sellQtyArr = this.priceDepthQty[1];
+      this.randomBid = this.priceDepthQty[2];
+      this.randomAsk = this.priceDepthQty[3];
+    }
+    else{
+      this.lastPrice = this.sharedData.sendData();
+    } 
+    
    }
 
 
 //Present data to table
   showData(){
-    this.fetchData();
-    console.log(this.randomBid);
     this.ELEMENT_DATA = [];
+    this.fetchData();
     for(let i = 0; i < 5; i++){
       this.ELEMENT_DATA.push({
         buyQty: this.buyQtyArr[i], 
@@ -138,7 +75,7 @@ export class PriceDepthComponent implements OnInit {
     
   }
 
-*/
+
 clearArr(){
   this.randomBid = [];
   this.randomAsk = [];
@@ -149,7 +86,7 @@ clearArr(){
   ngOnInit(): void {
     setInterval(() => {
       this.showData();
-  }, 5000);
+  }, 1000);
   }
 
 }

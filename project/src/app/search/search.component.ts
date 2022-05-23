@@ -17,6 +17,10 @@ export class SearchComponent implements OnInit {
     }
     this.symbolName = val;
     this.apiCall();
+  //    setInterval(() => {
+  //      this.apiCall();
+  //  }, 20000);
+    
     
   }
     

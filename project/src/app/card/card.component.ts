@@ -60,10 +60,7 @@ export class CardComponent implements OnInit {
     else if (this.apiData.data[0].day_change > 0){
       dChange!.style.color = "green";
     }
-    /*this.sharedData.passData();
-    setInterval(() => {
-      this.sharedData.passData();
-  }, 5000);*/
+
   }
   
 

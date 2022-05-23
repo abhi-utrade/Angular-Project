@@ -11,7 +11,7 @@ export class SymbolService{
   apiData:any;
   randomBid: number[]=[];
   randomAsk: number[]=[];
-  lastPrice:any;
+  priceShare:any;
   buyQtyArr:number[] = [];
   sellQtyArr:number[] = [];
 
@@ -19,7 +19,7 @@ export class SymbolService{
 
   constructor(private http:HttpClient) { }
 
-  /*
+  
    //GenerateRandom number for bid & ask
    randomNumberGenerator(min:number, max:number) { 
     let num = Math.random() *(max - min) + min;
@@ -39,6 +39,8 @@ export class SymbolService{
   }
 
   randomQtyGenerator(){
+    this.buyQtyArr = [];
+    this.sellQtyArr = [];
     for(let i = 0; i < 5; i++){
       this.buyQtyArr.push(this.quantityGenerator(1,1000));
       this.sellQtyArr.push(this.quantityGenerator(1,1000));
@@ -50,10 +52,12 @@ export class SymbolService{
     return Math.floor(Math.random() * (max - min + 1) + min)
   }
 
-  generateData(){
+  generateData(lastPrice:any){
+    this.randomBid = [];
+    this.randomAsk = [];
     //For Bid Array
     for(let i = 0; i < 5; i++ ){
-      this.randomBid.push(this.randomNumberGenerator(this.lastPrice - 5.5, this.lastPrice));
+      this.randomBid.push(this.randomNumberGenerator(lastPrice - 5.5, lastPrice));
     }
     this.randomBid.sort();
     this.randomBid.reverse();
@@ -61,36 +65,45 @@ export class SymbolService{
 
     //For Ask array
     for(let i = 0; i < 5; i++ ){
-      this.randomAsk.push(this.randomNumberGenerator(this.lastPrice, this.lastPrice + 5.5));
+      this.randomAsk.push(this.randomNumberGenerator(lastPrice, lastPrice + 5.5));
     }
     this.randomAsk.sort();
     
   }
-*/
+
+  showData(lP:any){
+    let lastPrice = lP;
+    this.priceShare = lastPrice;
+    this.generateData(lastPrice);
+    this.randomQtyGenerator();
+  }
 
   getData(data:any){
     this.apiData = data;
-    this.lastPrice = this.apiData.data[0].price;
+    let lastPrice = this.apiData.data[0].price;
+     this.showData(lastPrice);
+     setInterval(() => {
+       this.showData(lastPrice);
+   }, 6000);
   }
+
+  
   sendData(){
-    return this.lastPrice;
-    
+    let lp = this.apiData.data[0].price;
+    return lp;
     
   }
-  getQty(buyQtyArr:any, sellQtyArr:any, randomBid:any, randomAsk:any){
-    this.buyQtyArr = buyQtyArr;
-    this.sellQtyArr = sellQtyArr; 
-    this.randomBid = randomBid; 
-    this.randomAsk = randomAsk;
+  sendName(){
+    return this.apiData.data[0].ticker;
   }
 
   sendQty(){
-    return [this.buyQtyArr, this.sellQtyArr, this.randomBid, this.randomAsk];
+    return [this.buyQtyArr, this.sellQtyArr, this.randomBid, this.randomAsk,this.priceShare];
   }
 
   //Calling API and passing it
   getSymbolData(symbolName:string){
-    let url = `https://api.stockdata.org/v1/data/quote?symbols=${symbolName}&api_token=DGPC7m9oYaDji0OvuIvkeDW21LHWYWQE42qoA20R`;
+    let url = `https://api.stockdata.org/v1/data/quote?symbols=${symbolName}&api_token=M7FUkY904hxEswqNZjJJ3WECnXOhxpKgKHcPnaJm`;
     return this.http.get(url);
   }
 
