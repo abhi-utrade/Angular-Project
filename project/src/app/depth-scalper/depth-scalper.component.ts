@@ -105,7 +105,7 @@ export class DepthScalperComponent implements OnInit {
   ngOnInit(): void {
     setInterval(() => {
       this.showData();
-  }, 3500);
+  }, 3000);
     
   }
 

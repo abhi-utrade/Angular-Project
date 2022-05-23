@@ -34,7 +34,6 @@ export class SymbolService{
     }
     num = num + x;
     num = num/100;
-
     return (+num.toFixed(2));
   }
 
@@ -61,6 +60,8 @@ export class SymbolService{
     }
     this.randomBid.sort();
     this.randomBid.reverse();
+    
+    
     
 
     //For Ask array

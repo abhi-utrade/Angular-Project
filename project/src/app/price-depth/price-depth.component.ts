@@ -22,8 +22,8 @@ export interface PDElement {
 export class PriceDepthComponent implements OnInit {
   
   ELEMENT_DATA: PDElement[] = [];
-  randomBid: number[]=[];
-  randomAsk: number[]=[];
+  randomBid: any[]=[];
+  randomAsk: any[]=[];
   lastPrice:any;
   buyQtyArr:number[] = [];
   sellQtyArr:number[] = [];
@@ -66,8 +66,8 @@ export class PriceDepthComponent implements OnInit {
       this.ELEMENT_DATA.push({
         buyQty: this.buyQtyArr[i], 
         buyOrder: 0, 
-        bid: this.randomBid[i], 
-        ask: this.randomAsk[i], 
+        bid: this.randomBid[i].toFixed(2), 
+        ask: this.randomAsk[i].toFixed(2), 
         sellOrder: 0, 
         sellQty: this.sellQtyArr[i]
       });
