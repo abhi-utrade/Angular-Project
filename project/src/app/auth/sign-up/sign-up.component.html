@@ -1,0 +1,38 @@
+<div class="container">
+    <mat-card>
+    <h2>Register</h2>
+    <div class="example-container">
+        <div>
+            
+        <mat-form-field appearance="outline" >
+            <mat-label>First Name</mat-label>
+            <input matInput required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Last Name</mat-label>
+            <input matInput>
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field appearance="outline">
+            <mat-label>Enter your email</mat-label>
+            <input matInput placeholder="pat@example.com" [formControl]="email" required>
+            <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+        </mat-form-field>
+        
+        <mat-form-field appearance="outline">
+            <mat-label>Enter your password</mat-label>
+            <input matInput [type]="hide ? 'password' : 'text'" required>
+            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+        </mat-form-field>
+    </div>
+    <button mat-raised-button type="submit" color="primary">SignUp</button>
+    <button routerLink="/signin" mat-icon-button color="accent" matTooltip="SignIn">
+        <mat-icon>login</mat-icon>
+      </button>
+    </div>
+</mat-card>
+</div>

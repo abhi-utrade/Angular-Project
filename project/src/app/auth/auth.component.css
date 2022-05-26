@@ -1,0 +1,17 @@
+.mat-toolbar{
+    background-color: black;
+    height: 90px;
+}
+.logo{
+    width: 40px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.bodyDiv{
+    height: 657px;
+    background-size: 900px;
+    background-image: url(auth.component.spec.ts);
+    background-color: #f5eaea;
+    background-repeat: no-repeat;
+    background-position: bottom right;
+}

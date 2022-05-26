@@ -7,13 +7,14 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'project';
-  toggleStepper = false;
+ // toggleStepper = false;
   constructor() { }
-
+/*
   //Passing API data to card Component from Search Component 
   message:any;
   receiveMsg($event:any){
     this.message= $event
   }
+  */
   
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { SymbolService } from '../symbol.service'
+import { SymbolService } from '../services/symbol.service'
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
@@ -12,7 +12,6 @@ export class SearchComponent implements OnInit {
   symbolName!:string;
   getSymbol(val:string){
     if(val == undefined){
-      alert("Enter Correct Symbol")
       return;
     }
     this.symbolName = val;

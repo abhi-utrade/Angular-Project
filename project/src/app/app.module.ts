@@ -9,7 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { HttpClientModule } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
-import {MatCardModule} from '@angular/material/card';
+import { MatCardModule } from '@angular/material/card';
 import { CardComponent } from './card/card.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { PriceDepthComponent } from './price-depth/price-depth.component';
@@ -17,6 +17,12 @@ import { MatTableModule } from '@angular/material/table';
 import { DepthScalperComponent } from './depth-scalper/depth-scalper.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { AuthComponent } from './auth/auth.component';
+import { SignInComponent } from './auth/sign-in/sign-in.component';
+import { SignUpComponent } from './auth/sign-up/sign-up.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { ReactiveFormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [
@@ -24,7 +30,10 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     SearchComponent,
     CardComponent,
     PriceDepthComponent,
-    DepthScalperComponent
+    DepthScalperComponent,
+    AuthComponent,
+    SignInComponent,
+    SignUpComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +48,9 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     MatTooltipModule,
     MatTableModule,
     MatDialogModule,
-    DragDropModule
+    DragDropModule,
+    MatFormFieldModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

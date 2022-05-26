@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { SymbolService } from '..//symbol.service';
+import { SymbolService } from '../services/symbol.service';
 
 //Initialised Table colums using interface
 export interface PDElement {
@@ -55,6 +55,7 @@ export class PriceDepthComponent implements OnInit {
       this.lastPrice = this.sharedData.sendData();
     } 
     
+    
    }
 
 
@@ -75,13 +76,14 @@ export class PriceDepthComponent implements OnInit {
     
   }
 
-
+/*
 clearArr(){
   this.randomBid = [];
   this.randomAsk = [];
   this.buyQtyArr = [];
   this.sellQtyArr = [];
 }
+*/
 
   ngOnInit(): void {
     setInterval(() => {

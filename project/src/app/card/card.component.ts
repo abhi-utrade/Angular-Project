@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DepthScalperComponent } from '../depth-scalper/depth-scalper.component';
-import { SymbolService } from '..//symbol.service';
+import { SymbolService } from '../services/symbol.service';
 
 
 @Component({

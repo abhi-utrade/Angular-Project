@@ -1,0 +1,32 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+mat-card {
+    margin-top: 80px;
+    text-align: center;
+}
+
+.example-container .mat-form-field+.mat-form-field {
+    display: flex;
+}
+
+
+mat-form-field {
+    width: 250px;
+}
+
+.mat-icon-button {
+    float: right;
+}
+.mat-raised-button{
+    background-color:
+    #2796f0 ;
+}
+.form{
+    padding-left: 20px;
+    padding-right: 20px;
+}

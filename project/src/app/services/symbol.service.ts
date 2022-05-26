@@ -14,6 +14,7 @@ export class SymbolService{
   priceShare:any;
   buyQtyArr:number[] = [];
   sellQtyArr:number[] = [];
+  diff:number = 1;
 
   
 
@@ -56,7 +57,7 @@ export class SymbolService{
     this.randomAsk = [];
     //For Bid Array
     for(let i = 0; i < 5; i++ ){
-      this.randomBid.push(this.randomNumberGenerator(lastPrice - 5.5, lastPrice));
+      this.randomBid.push(this.randomNumberGenerator(lastPrice - this.diff, lastPrice));
     }
     this.randomBid.sort();
     this.randomBid.reverse();
@@ -66,7 +67,7 @@ export class SymbolService{
 
     //For Ask array
     for(let i = 0; i < 5; i++ ){
-      this.randomAsk.push(this.randomNumberGenerator(lastPrice, lastPrice + 5.5));
+      this.randomAsk.push(this.randomNumberGenerator(lastPrice, lastPrice + this.diff));
     }
     this.randomAsk.sort();
     
@@ -99,12 +100,14 @@ export class SymbolService{
   }
 
   sendQty(){
+    //console.log(this.randomBid);
     return [this.buyQtyArr, this.sellQtyArr, this.randomBid, this.randomAsk,this.priceShare];
   }
 
   //Calling API and passing it
   getSymbolData(symbolName:string){
-    let url = `https://api.stockdata.org/v1/data/quote?symbols=${symbolName}&api_token=M7FUkY904hxEswqNZjJJ3WECnXOhxpKgKHcPnaJm`;
+    let url = `https://api.stockdata.org/v1/data/quote?symbols=${symbolName}&api_token=KMQHk2c0F25mW6h3A5KX9fCxsiyvD9eDiduLMWsB`;
+    //M7FUkY904hxEswqNZjJJ3WECnXOhxpKgKHcPnaJm
     return this.http.get(url);
   }
 

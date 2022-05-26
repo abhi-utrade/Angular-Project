@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SymbolService } from '..//symbol.service';
+import { SymbolService } from '../services/symbol.service';
 
 export interface ScalperElement {
   myVol: any;
@@ -43,6 +43,8 @@ export class DepthScalperComponent implements OnInit {
     this.sellQty = this.priceDepthQty[1];
     this.bid = this.priceDepthQty[2];
     this.ask = this.priceDepthQty[3];
+    
+    //console.log("Check="+this.priceDepthQty[4]);
    }
 
   depthGenerator(num:number){
@@ -58,16 +60,22 @@ export class DepthScalperComponent implements OnInit {
       this.ltpDepth.push((Math.round(num1 * 100)/100));
     }
   }
+  /*
   clearArr(){
     this.bid = [];
     this.ask = [];
     this.buyQty = [];
     this.sellQty = [];
   }
+  */
 
   showData(){
     this.ELEMENT_DATA = [];
+    //console.log("Global="+this.lastPrice);
     this.fetchData();
+
+    console.log(this.lastPrice + " = " + this.buyQty);
+
     for(let i = 0; i < 30; i++){
       if(this.bid.includes(this.ltpDepth[i])){
         let bidIdx = this.bid.findIndex(b=> b === this.ltpDepth[i])
@@ -92,7 +100,7 @@ export class DepthScalperComponent implements OnInit {
     let elmnt = document.getElementById(this.lastPrice);
     if(elmnt){
       elmnt.scrollIntoView({block: "center"});
-      elmnt.style.background= "#bcf2f5";
+      elmnt.style.background = "#bcf2f5";
     }
     
     

@@ -1,6 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
+html, body { 
+    height: 100%; 
+    background-image: linear-gradient(to bottom right, rgba(255,0,0,0), rgb(39, 150, 240)); }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .cdk-global-overlay-wrapper {
     margin-left: 420px;
