@@ -50,7 +50,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatDialogModule,
     DragDropModule,
     MatFormFieldModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

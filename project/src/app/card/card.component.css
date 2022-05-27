@@ -26,14 +26,13 @@ mat-card-subtitle{
     font-size: 20px;
     color: red;
     float: right;
-    margin-top: 10px;
     border-left-style: hidden;
     padding-right: 40px;
 }
 .dayChange{
     font-size: 15px;
     float: right;
-    padding-right: 40px;
+    margin-right: 40px;
 }
 Img{
     width: 25px;

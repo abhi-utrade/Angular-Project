@@ -16,6 +16,7 @@ export class CardComponent implements OnInit {
   @Input() apiData: any;
   //Passing button status to Price Depth Component
   @Output() onBtnClicked = new EventEmitter<boolean>();
+  lastTradeTime:any;
 
   showPriceDepth() {
     this.onBtnClicked.emit(true);
@@ -37,6 +38,7 @@ export class CardComponent implements OnInit {
           exchange_short: "Exchange",
           price: 0,
           day_change: 0,
+          last_trade_time: "Last Trade Time"
         }
       ]
     };
@@ -54,6 +56,7 @@ export class CardComponent implements OnInit {
 
   ngAfterViewChecked(){
     let dChange = document.getElementById("dayCng");
+    this.lastTradeTime = (this.apiData.data[0].last_trade_time).substring(0, 19);
     if(this.apiData.data[0].day_change < 0){
       dChange!.style.color = "red";
     }
