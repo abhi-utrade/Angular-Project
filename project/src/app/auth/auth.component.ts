@@ -1,21 +1,25 @@
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
+import { SymbolService } from '../services/symbol.service';
 
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.css']
 })
-export class AuthComponent{
-  
+export class AuthComponent {
+
 
   title = 'project';
-  toggleStepper = false;
-  constructor() { }
+  priceDepthShow = false;
+  watchShow = true;
 
-  //Passing API data to card Component from Search Component 
-  message:any;
-  receiveMsg($event:any){
-    this.message= $event
-  }
+  apiDataReceived:boolean = false;
+  
+  constructor(private symbol:SymbolService) { 
+    this.symbol.getStatus().subscribe(data =>{
+      this.apiDataReceived = data;
+      this.watchShow = !this.apiDataReceived;
+    });
+    }
 
 }

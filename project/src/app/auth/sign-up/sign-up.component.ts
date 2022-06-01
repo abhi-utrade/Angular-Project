@@ -36,7 +36,8 @@ export class SignUpComponent implements OnInit {
         this.router.navigate(['/', 'signin']);
       },(error: HttpErrorResponse) => {
         if (error.status === 400 || error.status === 401)
-          alert('Enter Correct Email');
+          alert('Enter Correct Details');
+          console.log(error.message);
      });
     }
   }

@@ -11,11 +11,9 @@ export class RouterGuardGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean{
-      console.log("this worked")
       if(this.auth.signal){
         return true;
       }
-      console.log("that worked")
       this.route.navigate(['/signin']); 
       return false;
   }

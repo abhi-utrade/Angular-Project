@@ -22,6 +22,7 @@ import { SignInComponent } from './auth/sign-in/sign-in.component';
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
+import { WatchlistComponent } from './watchlist/watchlist.component';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     DepthScalperComponent,
     AuthComponent,
     SignInComponent,
-    SignUpComponent
+    SignUpComponent,
+    WatchlistComponent
   ],
   imports: [
     BrowserModule,

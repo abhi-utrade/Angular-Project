@@ -11,10 +11,10 @@ export class AuthService {
   signal = false;
   constructor(private http:HttpClient, private route:Router) { }
   signin(data:any):Observable<any>{
-    return this.http.post(`${baseUrl}signin/`,data);
+    return this.http.post(`${baseUrl}login/`,data);
   }
   signup(data:any):Observable<any>{
-    return this.http.post(`${baseUrl}signup/`,data);
+    return this.http.post(`${baseUrl}register/`,data);
   }
 
   openDashboard(){

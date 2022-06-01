@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { SymbolService } from '../services/symbol.service';
 
 export interface ScalperElement {
@@ -16,105 +17,119 @@ export interface ScalperElement {
 })
 export class DepthScalperComponent implements OnInit {
   ELEMENT_DATA: ScalperElement[] = [];
-  displayedColumns: string[] = ['myVol','bid','price', 'ask'];
-  ltpDepth:any[] = [];
-  lastPrice:any = 100;
-  apiData:any;
-  priceDepthQty:any;
-  bid: number[]=[];
-  ask: number[]=[];
-  buyQty:number[] = [];
-  sellQty:number[] = [];
-  bidData:any;
-  askData:any;
-  symbolName:any;
+  displayedColumns: string[] = ['myVol', 'bid', 'price', 'ask'];
+  ltpDepth: any[] = [];
+  lastPrice: any;
+  symbolName: any;
 
-  constructor(private sharedData:SymbolService) {
-    this.lastPrice = (Math.ceil((this.sharedData.sendData())*20)/20);
-    this.symbolName = this.sharedData.sendName();
+  randomBid: number[] = [];
+  randomAsk: number[] = [];
+  buyQtyArr: number[] = [];
+  sellQtyArr: number[] = [];
+
+  bidData: any;
+  askData: any;
+
+
+  constructor(private sharedData: SymbolService) {
+
+    let lp;
+    let sn;
+    this.sharedData.getApiData().subscribe(api => {
+      lp = (Math.ceil((api.data[0].price) * 20) / 20);
+      sn = api.data[0].ticker;
+    });
+    this.lastPrice = lp;
+    this.symbolName = sn;
+
     this.depthGenerator(this.lastPrice);
-    this.showData();
+    this.fetchData();
 
-   }
+  }
 
-   fetchData(){
-    this.priceDepthQty = this.sharedData.sendQty();
-    this.buyQty = this.priceDepthQty[0];
-    this.sellQty = this.priceDepthQty[1];
-    this.bid = this.priceDepthQty[2];
-    this.ask = this.priceDepthQty[3];
-    
-    //console.log("Check="+this.priceDepthQty[4]);
-   }
+  fetchData() {
 
-  depthGenerator(num:number){
+    let allObsers: Observable<any>[] = this.sharedData.sendQty();
+    let check;
+
+    allObsers[0].subscribe((data: any[]) => {
+      this.buyQtyArr = data;
+    });
+    allObsers[1].subscribe((data: any[]) => {
+      this.sellQtyArr = data;
+    });
+    allObsers[2].subscribe((data: any[]) => {
+      this.randomBid = data;
+      check = data;
+    });
+    allObsers[3].subscribe((data: any[]) => {
+      this.randomAsk = data;
+      this.showData();
+    });
+
+  }
+
+  depthGenerator(num: number) {
     let num1 = num;
-    for(let i = 0; i < 20; i++){
-        num +=  0.05;
-        this.ltpDepth.push((Math.round(num * 100)/100));
+    for (let i = 0; i < 20; i++) {
+      num += 0.05;
+      this.ltpDepth.push((Math.round(num * 100) / 100));
     }
     this.ltpDepth.reverse();
     this.ltpDepth.push(num1)
-    for(let i = 0; i < 20; i++){
-      num1 -=  0.05;
-      this.ltpDepth.push((Math.round(num1 * 100)/100));
+    for (let i = 0; i < 20; i++) {
+      num1 -= 0.05;
+      this.ltpDepth.push((Math.round(num1 * 100) / 100));
     }
   }
-  /*
-  clearArr(){
-    this.bid = [];
-    this.ask = [];
-    this.buyQty = [];
-    this.sellQty = [];
-  }
-  */
 
-  showData(){
+  showData() {
     this.ELEMENT_DATA = [];
-    //console.log("Global="+this.lastPrice);
-    this.fetchData();
-
-    console.log(this.lastPrice + " = " + this.buyQty);
-
-    for(let i = 0; i < 30; i++){
-      if(this.bid.includes(this.ltpDepth[i])){
-        let bidIdx = this.bid.findIndex(b=> b === this.ltpDepth[i])
-        this.bidData = this.buyQty[bidIdx];
+    //console.log(this.randomBid);
+    for (let i = 0; i < 30; i++) {
+      if (this.randomBid.includes(this.ltpDepth[i])) {
+        let bidIdx = this.randomBid.findIndex(b => b === this.ltpDepth[i])
+        this.bidData = this.buyQtyArr[bidIdx];
       }
-      if(this.ask.includes(this.ltpDepth[i])){
-        let askIdx = this.ask.findIndex(b=> b === this.ltpDepth[i])
-        this.askData = this.sellQty[askIdx];
+      if (this.randomAsk.includes(this.ltpDepth[i])) {
+        let askIdx = this.randomAsk.findIndex(b => b === this.ltpDepth[i])
+        this.askData = this.sellQtyArr[askIdx];
       }
+
       this.ELEMENT_DATA.push({
         myVol: "",
         bid: this.bidData,
-        price: this.ltpDepth[i],  
+        price: this.ltpDepth[i],
         ask: this.askData
       });
       this.bidData = "";
       this.askData = "";
     }
-    
+
   }
-  tableCeter(){
+
+  tableCeter() {
     let elmnt = document.getElementById(this.lastPrice);
-    if(elmnt){
-      elmnt.scrollIntoView({block: "center"});
+    if (elmnt) {
+      elmnt.scrollIntoView({ block: "center" });
       elmnt.style.background = "#bcf2f5";
     }
-    
-    
+
+
   }
 
 
-  ngAfterViewChecked(){
+  ngAfterViewChecked() {
     this.tableCeter();
+
   }
+
   ngOnInit(): void {
-    setInterval(() => {
-      this.showData();
-  }, 3000);
-    
+    //Interval
+    //    setInterval(() => {
+    //      this.showData();
+    //  }, 2000);
+
   }
 
 }

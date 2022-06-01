@@ -1,0 +1,14 @@
+<div class="cardView">
+    <h3 class="watchName">Default</h3>
+          <mat-card [class.mat-elevation-z4]="1" class="cardList" *ngFor="let item of watchListArray">
+            <mat-card-title >{{item}}</mat-card-title>
+            <mat-card-actions>
+                <button mat-button class="select" (click)="openWatchlistItem(item)"
+                        matTooltip="Select">
+                        <img class="btnIcon" src="../assets/S.png"></button>
+                <button mat-button class="delete" (click)="deleteWatchlistItem(item)"
+                        matTooltip="Delete">
+                        <img class="btnIcon" src="../assets/PD.png"></button>
+            </mat-card-actions>
+          </mat-card>
+        </div>

@@ -11,38 +11,32 @@ import { SymbolService } from '../services/symbol.service';
 })
 
 export class CardComponent implements OnInit {
-  interval:any;
-  //Getting API data from parent component
-  @Input() apiData: any;
-  //Passing button status to Price Depth Component
-  @Output() onBtnClicked = new EventEmitter<boolean>();
+  @Output() openPriceDepth = new EventEmitter<boolean>();
+  @Output() openWatchList = new EventEmitter<boolean>();
   lastTradeTime:any;
+  apiData:any;
 
+  //Event Emitter to show price depth
   showPriceDepth() {
-    this.onBtnClicked.emit(true);
+    this.openPriceDepth.emit(true);
   }
+    //Event Emitter to goto watchlist
+  goToWatch(){
+    //console.log("Back called");
+    this.openWatchList.emit(true);
+  }
+  
 
   constructor(public dialog: MatDialog, private sharedData:SymbolService) { }
 
   ngOnInit(): void {
-    //Stored Static Data for card Elements
-    this.apiData = {
-      meta: {
-        requested: 1,
-        returned: 1
-      },
-      data: [
-        {
-          ticker: "Symbol",
-          name: "Company Name",
-          exchange_short: "Exchange",
-          price: 0,
-          day_change: 0,
-          last_trade_time: "Last Trade Time"
-        }
-      ]
-    };
+    this.sharedData.getApiData().subscribe(data =>{
+      this.apiData = data;
+      this.lastTradeTime = (this.apiData.data[0].last_trade_time).substring(0, 19); 
+    });
+     
   }
+  
   //Function to open Dialog Box to show depth scalper
   openDialog() {
     if(this.apiData.data[0].price == 0){
@@ -56,15 +50,17 @@ export class CardComponent implements OnInit {
 
   ngAfterViewChecked(){
     let dChange = document.getElementById("dayCng");
-    this.lastTradeTime = (this.apiData.data[0].last_trade_time).substring(0, 19);
     if(this.apiData.data[0].day_change < 0){
       dChange!.style.color = "red";
     }
     else if (this.apiData.data[0].day_change > 0){
       dChange!.style.color = "green";
     }
-
   }
-  
+
+  addToWatchlist(){
+    this.sharedData.createWatchlist(this.apiData.data[0].ticker);
+  }
+
 
 }
