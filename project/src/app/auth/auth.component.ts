@@ -7,6 +7,9 @@ import { SymbolService } from '../services/symbol.service';
   styleUrls: ['./auth.component.css']
 })
 export class AuthComponent {
+  getWatchList() {
+    throw new Error('Method not implemented.');
+  }
 
 
   title = 'project';

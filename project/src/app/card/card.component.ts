@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DepthScalperComponent } from '../depth-scalper/depth-scalper.component';
+import { AuthService } from '../services/auth.service';
 import { SymbolService } from '../services/symbol.service';
 
 
@@ -27,14 +28,14 @@ export class CardComponent implements OnInit {
   }
   
 
-  constructor(public dialog: MatDialog, private sharedData:SymbolService) { }
-
-  ngOnInit(): void {
+  constructor(public dialog: MatDialog, private sharedData:SymbolService, private auth: AuthService) {
     this.sharedData.getApiData().subscribe(data =>{
       this.apiData = data;
       this.lastTradeTime = (this.apiData.data[0].last_trade_time).substring(0, 19); 
     });
-     
+   }
+
+  ngOnInit(): void {     
   }
   
   //Function to open Dialog Box to show depth scalper
@@ -59,7 +60,10 @@ export class CardComponent implements OnInit {
   }
 
   addToWatchlist(){
-    this.sharedData.createWatchlist(this.apiData.data[0].ticker);
+    // this.sharedData.createWatchlist(this.apiData.data[0].ticker);
+    this.auth.addWatchList(this.apiData.data[0].ticker).subscribe( res =>{
+      console.log(res + " Added")
+    })
   }
 
 

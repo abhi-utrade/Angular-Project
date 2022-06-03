@@ -33,6 +33,7 @@ export class SignInComponent implements OnInit{
     if(this.formGroup.valid){
       this.auth.signin(this.formGroup.value).subscribe(result =>{
         console.log(result);
+        this.auth.token = result.access;
         this.auth.openDashboard()
       },(error: HttpErrorResponse) => {
        if (error.status === 400 || error.status === 401)

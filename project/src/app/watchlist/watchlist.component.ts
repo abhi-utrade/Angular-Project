@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { SearchComponent } from '../search/search.component';
+import { AuthService } from '../services/auth.service';
 import { SymbolService } from '../services/symbol.service';
 
 @Component({
@@ -10,20 +11,31 @@ import { SymbolService } from '../services/symbol.service';
 export class WatchlistComponent implements OnInit {
 
 
-  watchListArray: any[] = this.service.passWatchlist();
+  watchListArray: any[] =  []; //this.service.passWatchlist();
 
-  constructor(private service:SymbolService) { }
+  constructor(private service:SymbolService, private auth:AuthService) {
+    this.showWatchList();
+   }
+
+   showWatchList(){
+     this.watchListArray = [];
+    this.auth.getWatchList().subscribe(res => {
+      res.forEach((ele :any) => 
+      this.watchListArray.push(ele.watchlist))
+    });
+   }
   
   ngOnInit(): void {
   }
 
   openWatchlistItem(item:any){
-    this.service.setApiData(item);
+     this.service.setApiData(item);
   }
 
   deleteWatchlistItem(item:any){
-    const index = this.watchListArray.indexOf(5);
-    this.watchListArray.splice(index, 1);
+    this.auth.deleteWatchList(item).subscribe(res => {
+      this.showWatchList();
+    })
   }
 
   

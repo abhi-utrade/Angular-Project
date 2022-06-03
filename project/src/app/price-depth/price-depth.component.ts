@@ -63,15 +63,6 @@ export class PriceDepthComponent implements OnInit {
           this.showData();
         }
       });
-      
-      
-
-      
-
-
-
-
-
   }
 
 
@@ -95,10 +86,6 @@ export class PriceDepthComponent implements OnInit {
 
 
   ngOnInit(): void {
-
-    //   setInterval(() => {
-    //     this.showData();
-    // }, 1000);
   }
 
 }
